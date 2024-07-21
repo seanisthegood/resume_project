@@ -1,8 +1,8 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 import openai
 from dotenv import load_dotenv
 import os
-import fitz  # PyMuPDF for PDF
+import pymupdf # PyMuPDF for PDF
 from docx import Document  # python-docx for DOCX
 
 # Load environment variables from .env file
@@ -37,7 +37,7 @@ def upload():
     })
 
 def extract_text_from_pdf(file):
-    doc = fitz.open(stream=file.read(), filetype="pdf")
+    doc = pymupdf.open(stream=file.read(), filetype="pdf")
     text = ""
     for page in doc:
         text += page.get_text()
